@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   db:
     image: mysql:8.0.32
     environment:
@@ -11,6 +12,7 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+
   rails:
     build:
       context: ./rails
@@ -23,5 +25,16 @@ services:
       - db
     tty: true
     stdin_open: true
+
+  next:
+      build:
+        dockerfile: ./next/Dockerfile
+      tty: true
+      stdin_open: true
+      volumes:
+        - ./next:/app
+      ports:
+        - "8000:3000"
+
 volumes:
   mysql_data:
